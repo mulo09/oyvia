@@ -1,0 +1,39 @@
+services:
+  oyvfront:
+    container_name: oyvfront
+    image: mulo09/oyvfront:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./sites:/etc/nginx/sites:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      # Static files of the muloborg app. Refresh them with `make sync-muloborg`.
+      - ${MULOBORG_HTML:-/opt/muloborg/html}:/usr/share/nginx/muloborg:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    networks:
+      - local
+    restart: unless-stopped
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./certbot-entrypoint.sh:/certbot-entrypoint.sh:ro
+    depends_on:
+      - oyvfront
+    entrypoint: ["/bin/sh", "/certbot-entrypoint.sh"]
+    restart: unless-stopped
+
+
+networks:
+  local:
+
+volumes:
+  certbot-etc:
+  certbot-var:

@@ -1,0 +1,137 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* WSL-Inspired Color Palette */
+:root {
+  --color-primary: #0066cc;
+  --color-primary-dark: #003057;
+  --color-secondary: #00b0ff;
+  --color-accent: #ff6b35;
+  --color-ocean-blue: #0077be;
+  --color-deep-ocean: #001f3f;
+
+  --color-background: #ffffff;
+  --color-background-dark: #121212;
+  --color-background-gray: #f5f5f5;
+
+  --color-text-primary: #424242;
+  --color-text-secondary: #666666;
+  --color-text-light: #9e9e9e;
+  --color-text-white: #ffffff;
+
+  --color-border: #e0e0e0;
+  --color-border-dark: #333333;
+
+  --gradient-ocean: linear-gradient(135deg, #0077be 0%, #003057 100%);
+  --gradient-sunset: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+}
+
+/* CSS Reset and Base Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Bootstrap's reboot sets `:root { scroll-behavior: smooth }`. On a new
+// navigation the Angular router calls viewportScroller.scrollToPosition([0, 0])
+// without a behavior option, so that rule makes every route change animate a
+// long scroll back to the top before the new page appears. `:root` is used here
+// rather than `html` because it has to match Bootstrap's specificity to win.
+// Components that want a smooth scroll pass `behavior: 'smooth'` explicitly.
+:root {
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  padding-top: 80px; /* Account for fixed header */
+  top: 0 !important;
+}
+
+/* Improve text rendering */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-primary-dark);
+}
+
+/* Accessibility improvements */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Button reset */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px;
+  }
+}
+
+/* SEO and Performance: Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Google Translate - Hide the top banner bar */
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+/* Style the Google Translate dropdown globally */
+.goog-te-gadget {
+  color: transparent !important;
+}
+
+.goog-te-combo {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #333 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  font-size: 14px !important;
+}

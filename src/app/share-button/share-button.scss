@@ -1,0 +1,67 @@
+:host {
+  display: inline-block;
+}
+
+.share {
+  position: relative;
+  display: inline-block;
+}
+
+.share__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+  padding: 0.5rem 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 0;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover,
+  &:focus {
+    background: var(--color-accent);
+    color: #000000;
+  }
+}
+
+.share__options {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  background: #000000;
+  border: 2px solid var(--color-accent);
+}
+
+.share__option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  padding: 0.65rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background: var(--color-accent);
+    color: #000000;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,82 @@
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: #1a1a1a;
+  min-height: 100vh;
+}
+
+.about-hero {
+  text-align: center;
+  margin-bottom: 60px;
+
+  &__eyebrow {
+    display: inline-block;
+    color: var(--color-accent);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  &__title {
+    font-size: 2.75rem;
+    color: #ffffff;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 25px;
+  }
+
+  &__lead {
+    font-size: 1.2rem;
+    color: #dddddd;
+    line-height: 1.7;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}
+
+.about-section {
+  margin-bottom: 45px;
+
+  h2 {
+    font-size: 1.8rem;
+    color: #ffffff;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-bottom: 3px solid var(--color-accent);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.05rem;
+    color: #cccccc;
+    line-height: 1.8;
+    margin-bottom: 18px;
+  }
+}
+
+.about-signature {
+  color: var(--color-accent) !important;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.15rem !important;
+}
+
+@media (max-width: 768px) {
+  .about-hero__title {
+    font-size: 2rem;
+  }
+
+  .about-hero__lead {
+    font-size: 1.05rem;
+  }
+
+  .about-section h2 {
+    font-size: 1.4rem;
+  }
+}

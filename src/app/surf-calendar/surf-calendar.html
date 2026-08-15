@@ -1,0 +1,29 @@
+<div class="surf-calendar-container">
+  <h1>Calendario de Eventos de Surf 2026</h1>
+
+  <section class="calendar-section">
+    <h2>Eventos del WSL Championship Tour</h2>
+    <div class="events-grid">
+      <article class="event-card" *ngFor="let event of worldTourEvents">
+        <h3>{{ event.name }}</h3>
+        <p class="event-date">
+          <time [attr.datetime]="event.startDate">{{ event.dateLabel }}</time>
+        </p>
+        <p class="event-location">{{ event.location }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="calendar-section">
+    <h2>Eventos de Surf en España</h2>
+    <div class="events-grid">
+      <article class="event-card" *ngFor="let event of spainEvents">
+        <h3>{{ event.name }}</h3>
+        <p class="event-date">
+          <time [attr.datetime]="event.startDate">{{ event.dateLabel }}</time>
+        </p>
+        <p class="event-location">{{ event.location }}</p>
+      </article>
+    </div>
+  </section>
+</div>

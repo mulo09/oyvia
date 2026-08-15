@@ -1,0 +1,95 @@
+<div class="article-detail-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Cargando artículo...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-state">
+    <h2>Error al cargar el artículo</h2>
+    <p>No se pudo encontrar el artículo solicitado.</p>
+    <button class="btn-back" (click)="goBack()">Volver al inicio</button>
+  </div>
+
+  <!-- Article Content -->
+  <article *ngIf="article && !loading" class="article-content">
+    <!-- Breadcrumbs -->
+    <nav class="article-breadcrumbs" aria-label="Migas de pan">
+      <ol>
+        <li><a routerLink="/">Inicio</a></li>
+        <li aria-current="page">{{article.name}}</li>
+      </ol>
+    </nav>
+
+    <!-- Back Button -->
+    <div class="article-header">
+      <button class="btn-back" (click)="goBack()">
+        ← Volver
+      </button>
+    </div>
+
+    <!-- Article Meta Info -->
+    <div class="article-meta">
+      <span class="article-category">{{article.category}}</span>
+      <div class="article-info">
+        <time class="article-date" [attr.datetime]="article.date">{{article.getFormattedDate()}}</time>
+        <span class="article-author">por <em>{{article.author}}</em></span>
+      </div>
+    </div>
+
+    <!-- Article Title -->
+    <h1 class="article-title">{{article.name}}</h1>
+
+    <!-- Featured Image -->
+    <div class="article-featured-image" *ngIf="article.fileList && article.fileList.length > 0">
+      <img [src]="article.fileList[0]?.fileName" [alt]="article.name"
+           width="1200" height="675" fetchpriority="high" decoding="async" />
+    </div>
+
+    <!-- Article Description/Content -->
+    <div class="article-body" [innerHTML]="article.description"></div>
+
+    <!-- Additional Images -->
+    <div class="article-gallery" *ngIf="article.fileList && article.fileList.length > 1">
+      <h2 class="gallery-title">Más imágenes</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item" *ngFor="let file of article.fileList.slice(1)">
+          <img [src]="file.fileName" [alt]="article.name"
+               width="600" height="400" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Share -->
+    <div class="article-share">
+      <app-share-button [articleId]="article.id" [title]="article.name"></app-share-button>
+    </div>
+
+    <!-- Related Articles Section -->
+    <div class="related-articles" *ngIf="relatedArticles.length > 0">
+      <h2 class="related-title">Artículos Relacionados</h2>
+      <div class="related-grid">
+        <a *ngFor="let relatedArticle of relatedArticles"
+           [routerLink]="['/article', relatedArticle.id]"
+           class="related-card">
+          <div class="related-image" *ngIf="relatedArticle.fileList && relatedArticle.fileList.length > 0">
+            <img [src]="relatedArticle.fileList[0]?.fileName" [alt]="relatedArticle.name"
+                 width="400" height="250" loading="lazy" decoding="async" />
+          </div>
+          <div class="related-content">
+            <span class="related-category">{{relatedArticle.category}}</span>
+            <h3 class="related-article-title">{{relatedArticle.name}}</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Back to Articles Button -->
+    <div class="article-footer">
+      <button class="btn-primary" (click)="goBack()">
+        Volver a los artículos
+      </button>
+    </div>
+  </article>
+</div>

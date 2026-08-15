@@ -1,0 +1,36 @@
+<div class="article-grid-container">
+<!--  <div style="padding: 20px; background: #f0f0f0; margin: 20px; color: #000;">-->
+<!--    <h3>Debug Info:</h3>-->
+<!--    <p>Total articles: {{ list1.length }}</p>-->
+<!--  </div>-->
+  <div class="custom-row" *ngFor="let p of list1" >
+    <div class="overview__content pl-0 pr-0">
+      <div class="overview__base--image" *ngIf="p.getThumbnail()">
+        <img class="img-fluid" style="height: 100%; width: 100%; display: block;"
+             [src]="p.getThumbnail()" alt="{{p.name}}"
+             width="800" height="500" loading="lazy" decoding="async"/>
+      </div>
+    </div>
+    <div class="overview__content2">
+      <div class="pl-5 pr-5 pt-3"><strong>Publicado:
+        <time [attr.datetime]="p.date">{{p.getFormattedDate()}}</time> por <em>{{p.author}}</em></strong></div>
+      <h6 class="pl-5 card-subtitletitle">
+        <div class="badge badge-primary text-wrap" style="width: 6rem;">
+          <strong>
+            {{p.category}}
+          </strong>
+        </div>
+      </h6>
+      <div class="pl-5 pr-5">
+        <h2 class="overview__title">
+          <a [routerLink]="['/article', p.id]">{{ p.name }}</a>
+        </h2>
+        <p class="overview__body text-sm-left">
+          {{ p.getShortDescription()}}
+        </p>
+        <p><button type="button" class="btn btn-secondary" [routerLink]="['/article', p.id]">Leer Artículo</button></p>
+        <app-share-button [articleId]="p.id" [title]="p.name"></app-share-button>
+      </div>
+    </div>
+  </div>
+</div>

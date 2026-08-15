@@ -1,0 +1,40 @@
+{
+  "id":"232",
+  "title":"Los mejores trucos de surf para el longboard",
+  "description":"El longboard surf se realiza con tablas largas, anchas y con mucha flotabilidad. Este tipo de tabla de surf puede ser muy útil para surferos novatos, ya que ofrece mayor estabilidad y facilita la remada, pudiendo coger",
+  "date":"19 feb 2020",
+  "fileName": "Rodilla-en-la-tabla-1.jpg"
+}
+
+
+[{
+  "id": 1,
+  "name": "La historia del surf, su evolución y sus orígenes hasta la actualidad",
+  "description": "Aunque Hawaii se considera la cuna del surf, lo cierto es que es difícil determinar el origen de este deporte, ya que no existen documentos escritos que lo atestigüen. Al tratarse de un deporte muy antiguo, es complicado dar una fecha exacta, más si cabe cuando fueron viajeros europeos los que contaron por primera vez, sin poder saber cuanto desarrollo anterior podría haber tenido. Con el surgimiento del surf moderno y su extensión mundial, se ha podido reconstruir la historia contemporánea de este deporte y hacer una breve incursión en su pasado.Hoy en día, el surf es un deporte que se practica en casi todo el mundo y sus industrias más desarrolladas se encuentran en Australia, Europa(especialmente España y Francia) y Estados Unidos.No obstante, en Biosurfcamp queremos realizar este artículo para intentar descubrir los orígenes y la historia del surf.",
+  "fileName": "Rodilla-en-la-tabla-1.jpg",
+  "date ": "2020 - 06 - 23 T23: 06: 29.000 + 0000 ",
+  "city ": "Madrid ",
+  "email ": "mio @gmail.com ",
+  "telephone ": "03014123 "
+},
+  {
+    "id": 2,
+    "name": "Los mejores trucos de surf para el longboard",
+    "description": "El longboard surf se realiza con tablas largas, anchas y con mucha flotabilidad. Este tipo de tabla de surf puede ser muy útil para surferos novatos, ya que ofrece mayor estabilidad y facilita la remada, pudiendo coger más olas. La tabla es bastante más grande que el surfero, poseyendo una punta redondeada al no necesitar una forma demasiado radical. La curvatura del longboard en el surf es prácticamente inexistente, lo que beneficia el deslizamiento por las olas, a la par que reduce la resistencia y mejora la velocidad.",
+    "fileName": "Origen-del-surf-historia.jpg",
+    "date": "2020-06-23T23:06:29.000+0000",
+    "city": "Barcelona",
+    "email": "mio@gmail.com",
+    "telephone": "03014123"
+  },
+  {
+    "id": 3,
+    "name": "Los mejores trucos de surf para el longboard",
+    "description": "Seamos claros, toda persona que empieza a hacer surf lo ha hecho teniendo en mente las olas gigantes. No solo la comunidad del surf busca su ola gigante perfecta, sino que, cuando se realiza un evento sobre este fenómeno colosal, la repercusión mediática se magnifica. Surfear una ola gigante es un hito que compete tanto a grandes surfistas como a los más curiosos. Ya hemos repasado varios vídeos de olas gigantes, hemos hablado sobre las mejores playas del mundo para surfear, pero, a continuación, repasamos las 3 olas gigantes más célebres del mundo a nuestro modo de ver.",
+    "fileName": "Olas-gigantes-en-el-mundo.-Las-olas-más-grandes-del-mundo..jpg",
+    "date": "2020-06-23T23:06:29.000+0000",
+    "city": "Barcelona",
+    "email": "mio@gmail.com",
+    "telephone": "03014123"
+  }
+]

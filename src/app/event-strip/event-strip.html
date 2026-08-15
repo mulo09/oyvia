@@ -1,0 +1,55 @@
+<section class="event-strip">
+
+  <div class="event-strip__container">
+    <button class="event-strip__nav event-strip__nav--left" (click)="scrollLeft()" aria-label="Anterior">
+      ‹
+    </button>
+
+    <div class="event-strip__scroll">
+      @for (event of events; track event.name) {
+        <div class="event-strip__card" [class.event-strip__card--live]="event.status === 'live'">
+          <div class="event-strip__card-top">
+            <span class="event-strip__date">{{ event.dateRange }}</span>
+          </div>
+          <h3 class="event-strip__name">{{ event.name }}</h3>
+          <p class="event-strip__presenter">{{ event.presenter }}</p>
+          <div class="event-strip__location">
+            <span class="event-strip__country">{{ event.country }}</span>
+            <span>{{ event.location }}</span>
+          </div>
+        </div>
+        @if (event.status === 'live') {
+          <div class="event-strip__countdown event-strip__countdown--live">
+            <span class="event-strip__countdown-label">PRÓXIMO EVENTO</span>
+            <div class="event-strip__countdown-timer">
+              <div class="event-strip__countdown-unit">
+                <span class="event-strip__countdown-value">{{ days() }}</span>
+                <span class="event-strip__countdown-text">DÍAS</span>
+              </div>
+              <span class="event-strip__countdown-colon">:</span>
+              <div class="event-strip__countdown-unit">
+                <span class="event-strip__countdown-value">{{ hours() }}</span>
+                <span class="event-strip__countdown-text">HRS</span>
+              </div>
+              <span class="event-strip__countdown-colon">:</span>
+              <div class="event-strip__countdown-unit">
+                <span class="event-strip__countdown-value">{{ minutes() }}</span>
+                <span class="event-strip__countdown-text">MIN</span>
+              </div>
+              <span class="event-strip__countdown-colon">:</span>
+              <div class="event-strip__countdown-unit">
+                <span class="event-strip__countdown-value">{{ seconds() }}</span>
+                <span class="event-strip__countdown-text">SEC</span>
+              </div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+
+    <button class="event-strip__nav event-strip__nav--right" (click)="scrollRight()" aria-label="Siguiente">
+      ›
+    </button>
+  </div>
+</section>
+

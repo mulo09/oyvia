@@ -1,0 +1,134 @@
+.contact-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: #1a1a1a;
+  min-height: 100vh;
+}
+
+.contact-hero {
+  text-align: center;
+  margin-bottom: 45px;
+
+  &__eyebrow {
+    display: inline-block;
+    color: var(--color-accent);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  &__title {
+    font-size: 2.75rem;
+    color: #ffffff;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  &__lead {
+    font-size: 1.15rem;
+    color: #dddddd;
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: #ffffff;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  input,
+  textarea {
+    background: #000000;
+    border: 2px solid #333333;
+    border-radius: 0;
+    padding: 14px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: #777777;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+.form-error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+.contact-submit {
+  background: var(--color-accent);
+  color: #000000;
+  border: none;
+  border-radius: 0;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.form-status {
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 12px;
+
+  &--success {
+    color: #4caf50;
+  }
+
+  &--error {
+    color: #ff6b6b;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-hero__title {
+    font-size: 2rem;
+  }
+}

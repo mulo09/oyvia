@@ -1,0 +1,45 @@
+
+// Home intro: gives the landing page a single H1 and indexable copy.
+.home-intro {
+  background: var(--gradient-ocean);
+  color: var(--color-text-white);
+  padding: 3rem 1.5rem;
+}
+
+.home-intro__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.home-intro__title {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.home-intro__lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.home-intro__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+
+  a {
+    color: var(--color-text-white);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}

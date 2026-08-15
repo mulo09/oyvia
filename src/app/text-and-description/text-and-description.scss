@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  background: #000000;
+  padding: 4rem 2rem;
+  margin-bottom: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.lead {
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  font-weight: 500;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+}

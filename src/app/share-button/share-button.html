@@ -1,0 +1,20 @@
+<div class="share">
+  <button type="button" class="share__btn" (click)="share($event)"
+          [attr.aria-expanded]="canUseNativeShare ? null : fallbackOpen"
+          aria-label="Compartir artículo">
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+      <path fill="currentColor"
+            d="M18 16.08a2.9 2.9 0 0 0-1.96.77L8.91 12.7a3.3 3.3 0 0 0 0-1.4l7.05-4.11a3 3 0 1 0-.96-2.19c0 .24.03.47.08.7L8.04 9.81a3 3 0 1 0 0 4.38l7.12 4.16c-.05.21-.08.43-.08.65a2.92 2.92 0 1 0 2.92-2.92Z"/>
+    </svg>
+    <span>Compartir</span>
+  </button>
+
+  <div class="share__options" *ngIf="!canUseNativeShare && fallbackOpen">
+    <a [href]="whatsappUrl" target="_blank" rel="noopener noreferrer" class="share__option">WhatsApp</a>
+    <a [href]="facebookUrl" target="_blank" rel="noopener noreferrer" class="share__option">Facebook</a>
+    <a [href]="twitterUrl" target="_blank" rel="noopener noreferrer" class="share__option">X</a>
+    <button type="button" class="share__option" (click)="copyLink($event)">
+      {{ copied ? 'Enlace copiado' : 'Copiar enlace' }}
+    </button>
+  </div>
+</div>
