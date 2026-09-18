@@ -1,0 +1,108 @@
+<!-- Inline banner: sits in the page flow above the article grid, it is not an
+     overlay, so the header and the rest of the page stay visible and usable. -->
+<section class="stage"
+         *ngIf="visible"
+         [class.stage--leaving]="leaving"
+         aria-label="Moments of the day">
+
+  <!-- Two stacked video layers: switching clips crossfades between them
+       instead of cutting to black. -->
+  <video #layer0
+         class="stage__video"
+         [class.stage__video--active]="activeLayer === 0"
+         [src]="layerSrc[0]"
+         [poster]="layerPoster[0]"
+         muted
+         autoplay
+         playsinline
+         webkit-playsinline
+         preload="auto"
+         disablepictureinpicture
+         aria-hidden="true"
+         (playing)="onPlaying(0)"
+         (ended)="onEnded(0)"
+         (error)="onError(0)"
+         (timeupdate)="onTimeUpdate(0)"></video>
+
+  <video #layer1
+         class="stage__video"
+         [class.stage__video--active]="activeLayer === 1"
+         [src]="layerSrc[1]"
+         [poster]="layerPoster[1]"
+         muted
+         playsinline
+         webkit-playsinline
+         preload="auto"
+         disablepictureinpicture
+         aria-hidden="true"
+         (playing)="onPlaying(1)"
+         (ended)="onEnded(1)"
+         (error)="onError(1)"
+         (timeupdate)="onTimeUpdate(1)"></video>
+
+  <div class="stage__scrim" aria-hidden="true"></div>
+
+  <h2 class="stage__title" *ngIf="currentVideo" [attr.data-text]="currentVideo.title">
+    <span class="stage__title-inner">{{ currentVideo.title }}</span>
+  </h2>
+
+  <!-- Clip picker: a single arrow on each edge, styled like the event strip's
+       nav buttons but bigger. Cycles to the previous/next clip in `videos`. -->
+  <button type="button"
+          class="stage__nav stage__nav--left"
+          *ngIf="videos.length > 1"
+          [disabled]="switching"
+          (click)="previousVideo()"
+          aria-label="Vídeo anterior">
+    &lsaquo;
+  </button>
+
+  <button type="button"
+          class="stage__nav stage__nav--right"
+          *ngIf="videos.length > 1"
+          [disabled]="switching"
+          (click)="nextVideo()"
+          aria-label="Vídeo siguiente">
+    &rsaquo;
+  </button>
+
+  <!-- Points: bottom-centered pagination, one per clip in `videos`. The
+       active point stretches into a pill and its fill tracks the active
+       clip's playback position, like a normal player's progress bar. -->
+  <div class="stage__dots" *ngIf="videos.length > 1" role="tablist" aria-label="Elegir vídeo">
+    <button type="button"
+            *ngFor="let v of videos; let i = index"
+            class="stage__dot"
+            [class.stage__dot--active]="i === currentIndex"
+            [disabled]="switching"
+            role="tab"
+            [attr.aria-selected]="i === currentIndex"
+            [attr.aria-label]="v.title"
+            (click)="selectVideo(i)">
+      <span class="stage__dot-track" aria-hidden="true">
+        <span class="stage__dot-fill"
+              *ngIf="i === currentIndex"
+              [style.width.%]="progress"></span>
+      </span>
+    </button>
+  </div>
+
+  <!-- Shown only when the browser refuses to autoplay. -->
+  <button type="button"
+          class="stage__play"
+          *ngIf="needsUserGesture"
+          (click)="startManually()"
+          aria-label="Reproducir vídeo">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <polygon points="8,5 19,12 8,19"></polygon>
+    </svg>
+  </button>
+
+  <button type="button" class="stage__skip" (click)="skip()">
+    Ocultar
+    <span class="stage__skip-icon" aria-hidden="true">&rsaquo;&rsaquo;</span>
+  </button>
+</section>
+
+
+

@@ -1,36 +1,108 @@
 <div class="article-grid-container">
-<!--  <div style="padding: 20px; background: #f0f0f0; margin: 20px; color: #000;">-->
-<!--    <h3>Debug Info:</h3>-->
-<!--    <p>Total articles: {{ list1.length }}</p>-->
-<!--  </div>-->
-  <div class="custom-row" *ngFor="let p of list1" >
-    <div class="overview__content pl-0 pr-0">
-      <div class="overview__base--image" *ngIf="p.getThumbnail()">
-        <img class="img-fluid" style="height: 100%; width: 100%; display: block;"
-             [src]="p.getThumbnail()" alt="{{p.name}}"
-             width="800" height="500" loading="lazy" decoding="async"/>
+
+  <!-- Layout switcher: mirrors the segmented control Red Bull uses above its feeds. -->
+  <div class="layout-switch" role="group" aria-label="Cambiar diseño de la lista de artículos">
+    <button type="button"
+            class="layout-switch__btn"
+            [class.is-active]="layout === 'list'"
+            [attr.aria-pressed]="layout === 'list'"
+            (click)="setLayout('list')">
+      <svg class="layout-switch__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <rect x="0" y="1" width="16" height="4" rx="1"></rect>
+        <rect x="0" y="7" width="16" height="4" rx="1"></rect>
+        <rect x="0" y="13" width="16" height="2" rx="1"></rect>
+      </svg>
+      <span>Lista</span>
+    </button>
+    <button type="button"
+            class="layout-switch__btn"
+            [class.is-active]="layout === 'feed'"
+            [attr.aria-pressed]="layout === 'feed'"
+            (click)="setLayout('feed')">
+      <svg class="layout-switch__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <rect x="0" y="0" width="7" height="7" rx="1"></rect>
+        <rect x="9" y="0" width="7" height="7" rx="1"></rect>
+        <rect x="0" y="9" width="7" height="7" rx="1"></rect>
+        <rect x="9" y="9" width="7" height="7" rx="1"></rect>
+      </svg>
+      <span>Tarjetas</span>
+    </button>
+  </div>
+
+  <!-- ============================ LIST LAYOUT ============================ -->
+  <ng-container *ngIf="layout === 'list'">
+    <div class="custom-row" *ngFor="let p of list1" >
+      <div class="overview__content pl-0 pr-0">
+        <div class="overview__base--image" *ngIf="p.getThumbnail()">
+          <img class="img-fluid" style="height: 100%; width: 100%; display: block;"
+               [src]="p.getThumbnail()" alt="{{p.name}}"
+               width="800" height="500" loading="lazy" decoding="async"/>
+        </div>
+      </div>
+      <div class="overview__content2">
+        <div class="pl-5 pr-5 pt-3"><strong>Publicado:
+          <time [attr.datetime]="p.date">{{p.getFormattedDate()}}</time> por <em>{{p.author}}</em></strong></div>
+        <h6 class="pl-5 card-subtitletitle">
+          <div class="badge badge-primary text-wrap" style="width: 6rem;">
+            <strong>
+              {{p.category}}
+            </strong>
+          </div>
+        </h6>
+        <div class="pl-5 pr-5">
+          <h2 class="overview__title">
+            <a [routerLink]="['/article', p.id]">{{ p.name }}</a>
+          </h2>
+          <p class="overview__body text-sm-left">
+            {{ p.getShortDescription()}}
+          </p>
+          <p><button type="button" class="btn btn-secondary" [routerLink]="['/article', p.id]">Leer Artículo</button></p>
+          <app-share-button [articleId]="p.id" [title]="p.name"></app-share-button>
+        </div>
       </div>
     </div>
-    <div class="overview__content2">
-      <div class="pl-5 pr-5 pt-3"><strong>Publicado:
-        <time [attr.datetime]="p.date">{{p.getFormattedDate()}}</time> por <em>{{p.author}}</em></strong></div>
-      <h6 class="pl-5 card-subtitletitle">
-        <div class="badge badge-primary text-wrap" style="width: 6rem;">
-          <strong>
-            {{p.category}}
-          </strong>
+  </ng-container>
+
+  <!-- ============================ FEED LAYOUT ============================ -->
+  <!-- Red Bull style cards: image on top, floating badge and channel logo. -->
+  <div class="event-feed" *ngIf="layout === 'feed'">
+    <article class="event-feed-card event-feed-card--badge event-feed-card--logo"
+             *ngFor="let p of list1">
+      <!-- No aria-label here: the card's own heading, meta and excerpt already
+           give the link its accessible name. An aria-label with just the
+           title would hide that other visible text from assistive tech,
+           which is what axe's "label-content-name-mismatch" flags. -->
+      <a class="event-feed-card__link" [routerLink]="['/article', p.id]">
+        <div class="event-feed-card__media">
+          <img class="event-feed-card__image"
+               *ngIf="p.getThumbnail(); else feedPlaceholder"
+               [src]="p.getThumbnail()" [alt]="p.name"
+               width="640" height="360" loading="lazy" decoding="async"/>
+          <ng-template #feedPlaceholder>
+            <div class="event-feed-card__image event-feed-card__image--empty" aria-hidden="true"></div>
+          </ng-template>
+
+          <span class="event-feed-card__badge">{{ p.category }}</span>
+
+          <span class="event-feed-card__logo">
+            <img [src]="feedLogo" [alt]="siteName" width="120" height="36" loading="lazy" decoding="async"/>
+          </span>
         </div>
-      </h6>
-      <div class="pl-5 pr-5">
-        <h2 class="overview__title">
-          <a [routerLink]="['/article', p.id]">{{ p.name }}</a>
-        </h2>
-        <p class="overview__body text-sm-left">
-          {{ p.getShortDescription()}}
-        </p>
-        <p><button type="button" class="btn btn-secondary" [routerLink]="['/article', p.id]">Leer Artículo</button></p>
+
+        <div class="event-feed-card__body">
+          <p class="event-feed-card__meta">
+            <time [attr.datetime]="p.date">{{ p.getFormattedDate() }}</time>
+            <span class="event-feed-card__dot" aria-hidden="true">•</span>
+            <span>{{ p.author }}</span>
+          </p>
+          <h3 class="event-feed-card__title">{{ p.name }}</h3>
+          <p class="event-feed-card__excerpt">{{ p.getShortDescription() }}</p>
+        </div>
+      </a>
+
+      <div class="event-feed-card__footer">
         <app-share-button [articleId]="p.id" [title]="p.name"></app-share-button>
       </div>
-    </div>
+    </article>
   </div>
 </div>

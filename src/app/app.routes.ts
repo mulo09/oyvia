@@ -1,10 +1,5 @@
 import { Routes } from '@angular/router';
 import { Home } from './home/home';
-import { SurfCalendar } from './surf-calendar/surf-calendar';
-import { ArticleDetail } from './article-detail/article-detail';
-import { AboutUs } from './about-us/about-us';
-import { Contact } from './contact/contact';
-import { NotFound } from './not-found/not-found';
 import { PageMeta } from './services/seo';
 
 export interface RouteSeoData {
@@ -40,7 +35,7 @@ export const routes: Routes = [
   },
   {
     path: 'about',
-    component: AboutUs,
+    loadComponent: () => import('./about-us/about-us').then(m => m.AboutUs),
     data: {
       seo: {
         title: 'Sobre Nosotros',
@@ -53,7 +48,7 @@ export const routes: Routes = [
   },
   {
     path: 'contact',
-    component: Contact,
+    loadComponent: () => import('./contact/contact').then(m => m.Contact),
     data: {
       seo: {
         title: 'Contacto',
@@ -65,7 +60,7 @@ export const routes: Routes = [
   },
   {
     path: 'surf-calendar',
-    component: SurfCalendar,
+    loadComponent: () => import('./surf-calendar/surf-calendar').then(m => m.SurfCalendar),
     data: {
       seo: {
         title: 'Calendario de Eventos de Surf 2026',
@@ -77,8 +72,8 @@ export const routes: Routes = [
     },
   },
   // No `seo` data: ArticleDetail sets the metadata once the article is loaded.
-  { path: 'article/:id', component: ArticleDetail },
+  { path: 'article/:id', loadComponent: () => import('./article-detail/article-detail').then(m => m.ArticleDetail) },
   // Unknown URLs render a real 404 page marked noindex instead of silently
   // showing the home page, which search engines treat as a soft 404.
-  { path: '**', component: NotFound },
+  { path: '**', loadComponent: () => import('./not-found/not-found').then(m => m.NotFound) },
 ];

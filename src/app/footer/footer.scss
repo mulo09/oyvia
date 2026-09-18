@@ -38,6 +38,10 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 0.75rem;
+  // The global `h1..h6 { color: var(--color-primary-dark) }` rule (dark navy)
+  // otherwise wins over the inherited white footer text, leaving a 1.23:1
+  // contrast ratio against this dark navy background.
+  color: var(--color-text-white, #fff);
 }
 
 .site-footer__nav ul,

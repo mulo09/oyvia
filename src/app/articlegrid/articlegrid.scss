@@ -7,6 +7,66 @@ $baseline: 8px;
   background: #1a1a1a;
 }
 
+/* ------------------------------------------------------------------ */
+/* Layout switcher                                                     */
+/* ------------------------------------------------------------------ */
+.layout-switch {
+  display: flex;
+  gap: 0;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+.layout-switch__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  background: transparent;
+  color: #cccccc;
+  border: 2px solid #333333;
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  // Collapse the shared border between the two segments.
+  & + & {
+    border-left-width: 0;
+  }
+
+  .layout-switch__icon {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  &:hover {
+    color: #ffffff;
+    border-color: var(--color-accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  &.is-active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #000000;
+  }
+
+  @media (max-width: 480px) {
+    flex: 1;
+    justify-content: center;
+    padding: 0.6rem 0.75rem;
+  }
+}
+
 .custom-row {
   display: flex;
   flex-wrap: wrap;
@@ -171,3 +231,205 @@ $baseline: 8px;
     box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Feed layout - Red Bull style cards                                  */
+/* ------------------------------------------------------------------ */
+.event-feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+
+  @media (max-width: 480px) {
+    // Below the 320px track the auto-fill grid would overflow on small
+    // phones, so fall back to a single full width column.
+    grid-template-columns: 1fr;
+  }
+}
+
+.event-feed-card {
+  display: flex;
+  flex-direction: column;
+  background: #000000;
+  border: 2px solid #1f1f1f;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.event-feed-card__link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+  }
+}
+
+.event-feed-card__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111111;
+}
+
+.event-feed-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+
+  &--empty {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  }
+}
+
+.event-feed-card:hover .event-feed-card__image {
+  transform: scale(1.06);
+}
+
+// `--badge` modifier: category chip pinned to the top left of the media.
+.event-feed-card--badge .event-feed-card__badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  padding: 0.35rem 0.75rem;
+  background: var(--color-accent);
+  color: #000000;
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1;
+  max-width: calc(100% - 1.5rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// `--logo` modifier: channel logo pinned to the bottom left of the media,
+// sitting on a gradient so it stays legible over bright photos.
+.event-feed-card--logo .event-feed-card__media::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.event-feed-card--logo .event-feed-card__logo {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 2;
+  display: block;
+
+  img {
+    display: block;
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+  }
+}
+
+.event-feed-card__body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.event-feed-card__meta {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-accent);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.event-feed-card__dot {
+  color: #555555;
+}
+
+.event-feed-card__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+  line-height: 1.25;
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: color 0.3s ease;
+
+  // Keep every card the same height regardless of headline length.
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-feed-card:hover .event-feed-card__title {
+  color: var(--color-accent);
+}
+
+.event-feed-card__excerpt {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #cccccc;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-feed-card__footer {
+  padding: 0 1.25rem 1.25rem;
+}
+
+// Respect users who asked the OS to limit animation.
+@media (prefers-reduced-motion: reduce) {
+  .event-feed-card,
+  .event-feed-card__image,
+  .event-feed-card__title,
+  .layout-switch__btn {
+    transition: none;
+  }
+
+  .event-feed-card:hover {
+    transform: none;
+  }
+
+  .event-feed-card:hover .event-feed-card__image {
+    transform: none;
+  }
+}
+
