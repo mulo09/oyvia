@@ -23,7 +23,24 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets",
+                "ignore": [
+                  "images/Surfer1.mp4",
+                  "images/output.mp4",
+                  "images/favicon.png",
+                  "images/logoia2.png",
+                  "images/logoia.png",
+                  "images/logoia",
+                  "images/Pattex-Product-Detail-Pattex-new.jpg",
+                  "videos/*_instagram.mp4"
+                ]
+              }
+            ],
             "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.scss"]
           },
           "configurations": {
