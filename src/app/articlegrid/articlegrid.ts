@@ -29,8 +29,11 @@ export class Articlegrid implements OnInit {
    * Layout used to render the article list.
    *  - `list`: the original alternating full width rows.
    *  - `feed`: Red Bull style compact cards (event-feed-card).
+   *
+   * Defaults to `feed` (cards view). `restoreLayout()` still lets a returning
+   * visitor's saved preference (in localStorage) override this default.
    */
-  public layout: ArticleGridLayout = 'list';
+  public layout: ArticleGridLayout = 'feed';
 
   /** Logo shown on the feed cards, mirroring Red Bull's `--logo` modifier. */
   /**
