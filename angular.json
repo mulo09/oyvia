@@ -41,7 +41,10 @@
                 ]
               }
             ],
-            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.scss"]
+            "styles": ["src/styles/bootstrap-custom.scss", "src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules"]
+            }
           },
           "configurations": {
             "production": {

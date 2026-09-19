@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olas y Vientos — Instagram carousel prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — copied 1:1 from the olasyvientos.es codebase
+   src/styles.scss + src/app/articlegrid/articlegrid.scss
+   ============================================================ */
+:root{
+  --accent:#ff6b35;            /* --color-accent */
+  --bg:#1a1a1a;                /* body background */
+  --card:#000000;              /* .event-feed-card background */
+  --border:#1f1f1f;            /* .event-feed-card border */
+  --text:#ffffff;
+  --muted:#cccccc;             /* .event-feed-card__excerpt */
+  --dot:#555555;               /* .event-feed-card__dot */
+  --gradient-sunset:linear-gradient(135deg,#ff6b35 0%,#f7931e 100%);
+
+  /* Instagram canvas */
+  --W:1080px;
+  --H:1350px;
+  --pad:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#2b2b2b;
+  font-family:'Roboto',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;
+  display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px;
+}
+/* Render mode: only one slide, no page chrome */
+body.only{background:transparent;padding:0;gap:0}
+body.only .slide{display:none;outline:0}
+body.only .slide.show{display:flex}
+body.only .label{display:none}
+
+.label{color:#888;font:900 13px/1 'Roboto',sans-serif;letter-spacing:2px;text-transform:uppercase;align-self:flex-start}
+
+.slide{
+  width:var(--W);height:var(--H);
+  background:var(--card);
+  color:var(--text);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  border:2px solid var(--border);
+}
+
+/* ---------- shared atoms ---------- */
+.badge{                         /* .event-feed-card__badge */
+  display:inline-block;
+  background:var(--accent);color:#000;
+  font-weight:900;text-transform:uppercase;letter-spacing:2px;
+  font-size:22px;line-height:1;padding:14px 24px;border-radius:0;
+}
+.meta{                          /* .event-feed-card__meta */
+  display:flex;align-items:center;gap:12px;
+  color:var(--accent);font-size:24px;font-weight:900;
+  text-transform:uppercase;letter-spacing:2px;
+}
+.meta .dot{color:var(--dot)}
+.meta .author{color:var(--muted)}
+.title{                         /* .event-feed-card__title / .overview__title */
+  font-size:76px;font-weight:900;line-height:1.1;
+  text-transform:uppercase;letter-spacing:-1px;color:#fff;
+}
+.title .hl{color:var(--accent)}
+.excerpt{                       /* .event-feed-card__excerpt */
+  font-size:30px;line-height:1.55;color:var(--muted);font-weight:400;
+}
+.btn{                           /* .btn-secondary */
+  display:inline-flex;align-items:center;gap:14px;
+  background:var(--accent);color:#000;
+  font-weight:900;text-transform:uppercase;letter-spacing:2px;
+  font-size:24px;padding:20px 40px;border-radius:0;border:none;
+}
+.btn--ghost{background:transparent;color:var(--accent);border:3px solid var(--accent)}
+.rule{height:6px;width:96px;background:var(--accent)}
+
+/* media with the site's bottom gradient (.event-feed-card--logo ::after) */
+.media{position:relative;overflow:hidden;background:#111}
+.media img{width:100%;height:100%;object-fit:cover;display:block}
+.media::after{
+  content:'';position:absolute;inset:auto 0 0 0;height:45%;
+  background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,0));
+  pointer-events:none;z-index:1;
+}
+.media .badge{position:absolute;top:28px;left:28px;z-index:2}
+.media .brandmark{position:absolute;left:28px;bottom:28px;z-index:2;height:64px;width:auto}
+
+/* brand lockup (navbar style: round logo + orange wordmark) */
+.lockup{display:flex;align-items:center;gap:18px}
+.lockup img{height:72px;width:auto;display:block}
+.lockup .word{
+  color:var(--accent);font-weight:900;font-size:38px;
+  text-transform:uppercase;letter-spacing:1px;line-height:1;
+}
+.handle{color:var(--muted);font-size:26px;font-weight:700;letter-spacing:1px}
+
+/* top accent hairline, used as a brand signature on plain slides */
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:var(--gradient-sunset);z-index:5}
+
+/* swipe affordance */
+.swipe{
+  position:absolute;right:36px;bottom:36px;z-index:6;
+  display:flex;align-items:center;gap:12px;
+  background:var(--accent);color:#000;
+  font-weight:900;font-size:22px;letter-spacing:2px;text-transform:uppercase;
+  padding:16px 26px;
+}
+.pager{
+  position:absolute;left:36px;bottom:40px;z-index:6;
+  color:#fff;font-weight:900;font-size:22px;letter-spacing:3px;
+}
+.pager b{color:var(--accent)}
+
+/* ---------- slide 1 : COVER (full bleed) ---------- */
+.cover .media{position:absolute;inset:0;height:100%}
+.cover .media::after{height:78%;background:linear-gradient(to top,rgba(0,0,0,.94) 12%,rgba(0,0,0,.55) 48%,rgba(0,0,0,0) 100%)}
+.cover .copy{position:relative;z-index:3;margin-top:auto;padding:var(--pad);display:flex;flex-direction:column;gap:28px}
+.cover .title{font-size:92px}
+.cover .topbar{position:absolute;z-index:3;top:var(--pad);left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;align-items:center}
+
+/* ---------- slide 2 : PHOTO + TEXT (the web card, 1:1 ratio) ---------- */
+.split .media{flex:0 0 720px}
+.split .body{padding:var(--pad);display:flex;flex-direction:column;gap:26px;flex:1}
+.split .title{font-size:58px}
+
+/* ---------- slide 3 : BIG DATA / QUOTE ---------- */
+.data{justify-content:center;padding:var(--pad);gap:36px;background:var(--card)}
+.data .big{font-size:300px;font-weight:900;line-height:.85;color:var(--accent);letter-spacing:-8px}
+.data .legend{font-size:46px;font-weight:900;text-transform:uppercase;line-height:1.15;letter-spacing:-.5px}
+.data .excerpt{font-size:32px;max-width:860px}
+
+/* ---------- slide 4 : NUMBERED LIST ---------- */
+.list{padding:var(--pad);gap:40px;justify-content:center}
+.list .item{display:flex;gap:32px;align-items:flex-start;border-bottom:2px solid #222;padding-bottom:36px}
+.list .item:last-of-type{border-bottom:none}
+.list .num{
+  flex:0 0 84px;height:84px;background:var(--accent);color:#000;
+  font-weight:900;font-size:44px;display:flex;align-items:center;justify-content:center;
+}
+.list .item h3{font-size:40px;font-weight:900;text-transform:uppercase;line-height:1.15;margin-bottom:10px}
+.list .item p{font-size:28px;line-height:1.5;color:var(--muted);font-weight:400}
+
+/* ---------- slide 5 : FULL PHOTO + CAPTION BAR ---------- */
+.photo .media{flex:1}
+.photo .caption{background:var(--accent);color:#000;padding:36px var(--pad);display:flex;flex-direction:column;gap:8px}
+.photo .caption strong{font-size:38px;font-weight:900;text-transform:uppercase;letter-spacing:-.5px;line-height:1.15}
+.photo .caption span{font-size:24px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+/* ---------- slide 6 : CTA ---------- */
+.cta{align-items:center;justify-content:center;text-align:center;padding:var(--pad);gap:40px;
+     background:radial-gradient(120% 90% at 50% 0%,#241208 0%,#000 62%)}
+.cta .lockup img{height:150px}
+.cta .lockup{flex-direction:column;gap:26px}
+.cta .lockup .word{font-size:64px;letter-spacing:2px}
+.cta h2{font-size:56px;font-weight:900;text-transform:uppercase;line-height:1.15;letter-spacing:-1px}
+.cta .url{color:var(--accent);font-size:34px;font-weight:900;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<div class="label">01 · Portada (hook)</div>
+<section class="slide cover" id="s1">
+  <div class="media"><img src="../../stage/teahupoo.jpg" alt=""></div>
+  <div class="topbar">
+    <span class="badge">Main</span>
+    <span class="handle">@olasyvientos</span>
+  </div>
+  <div class="copy">
+    <div class="meta"><span>10 de septiembre de 2026</span><span class="dot">•</span><span class="author">Editor</span></div>
+    <h1 class="title">España firma un gran arranque en el <span class="hl">ISA World Junior</span></h1>
+    <div class="rule"></div>
+  </div>
+  <div class="pager"><b>01</b>/06</div>
+  <div class="swipe">Desliza →</div>
+</section>
+
+<div class="label">02 · Contexto (foto + texto, calco de la card web)</div>
+<section class="slide split" id="s2">
+  <div class="media">
+    <img src="../../stage/surfwave1.jpg" alt="">
+    <span class="badge">Surf</span>
+    <img class="brandmark" src="../../logoia2.png" alt="">
+  </div>
+  <div class="body">
+    <div class="meta"><span>Qué ha pasado</span><span class="dot">•</span><span class="author">El Salvador</span></div>
+    <h2 class="title">La selección júnior se mete en cuartos</h2>
+    <p class="excerpt">La Selección Española Júnior protagoniza una destacada actuación en el ISA World Junior Surfing Championship 2026, que se disputa en El Salvador con más de 40 países en el agua.</p>
+  </div>
+  <div class="pager"><b>02</b>/06</div>
+</section>
+
+<div class="label">03 · Dato grande</div>
+<section class="slide data" id="s3">
+  <div class="big">4</div>
+  <div class="legend">Españoles<br>en cuartos de final</div>
+  <div class="rule"></div>
+  <p class="excerpt">Mejor registro del equipo nacional en la historia del campeonato júnior.</p>
+  <div class="pager"><b>03</b>/06</div>
+  <div class="swipe">Desliza →</div>
+</section>
+
+<div class="label">04 · Lista numerada</div>
+<section class="slide list" id="s4">
+  <div class="meta" style="margin-bottom:8px"><span>Las claves</span></div>
+  <div class="item"><div class="num">1</div><div><h3>Olas de dos metros</h3><p>El swell del Pacífico dejó series limpias durante toda la serie de mañana.</p></div></div>
+  <div class="item"><div class="num">2</div><div><h3>Estrategia de prioridad</h3><p>El equipo apostó por esperar series largas en lugar de sumar olas cortas.</p></div></div>
+  <div class="item"><div class="num">3</div><div><h3>Cantera vasca y canaria</h3><p>Tres de los cuatro clasificados salen de los centros de tecnificación del norte.</p></div></div>
+  <div class="pager"><b>04</b>/06</div>
+</section>
+
+<div class="label">05 · Foto + barra naranja</div>
+<section class="slide photo" id="s5">
+  <div class="media">
+    <img src="../../stage/surfwave3.jpg" alt="">
+    <img class="brandmark" src="../../logoia2.png" alt="">
+  </div>
+  <div class="caption">
+    <strong>Próxima serie: jueves 06:30 CET</strong>
+    <span>📷 Foto: ISA / Pablo Jiménez</span>
+  </div>
+  <div class="pager" style="color:#000"><b style="color:#000">05</b>/06</div>
+</section>
+
+<div class="label">06 · Cierre / CTA</div>
+<section class="slide cta" id="s6">
+  <div class="lockup">
+    <img src="../../logoia2.png" alt="">
+    <span class="word">Olas y Vientos</span>
+  </div>
+  <h2>Toda la actualidad<br>del surf y el kite</h2>
+  <div class="rule" style="margin:0 auto"></div>
+  <span class="btn">Sigue @olasyvientos</span>
+  <div class="url">olasyvientos.es</div>
+</section>
+
+<script>
+  // Render mode: file:///...?only=3  -> shows only slide 3 on a bare canvas
+  const only = new URLSearchParams(location.search).get('only');
+  if (only) {
+    document.body.classList.add('only');
+    const el = document.getElementById('s' + only);
+    if (el) el.classList.add('show');
+  }
+</script>
+</body>
+</html>
+

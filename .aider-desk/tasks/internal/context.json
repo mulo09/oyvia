@@ -3,7 +3,224 @@
   "contextMessages": [],
   "contextFiles": [
     {
+      "path": "src/assets/images/logoia.png",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/text-and-description/text-and-description.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/text-and-description/text-and-description.ts",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/navbar/navbar.ts",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/home/home.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/home/home.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/navbar/navbar.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/social-media/social-media.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/navbar/navbar.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/nginx.conf",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/app.ts",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/articlegrid/articlegrid.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "angular.json",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/styles.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/app.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/language-switcher/language-switcher.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/language-switcher/language-switcher.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/home/home.ts",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/event-strip/event-strip.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/event-strip/event-strip.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/event-strip/event-strip.ts",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/app.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/article-detail/article-detail.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/sites/google0f58490df29c1e72.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/articlegrid/articlegrid.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/index.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/sites/muloborg.http.conf",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/sites/olasyvientos.ssl.conf",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/sites/olasyvientos.redirect.conf",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/sites/olasyvientos.http.conf",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/nginx.conf",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/services/seo.ts",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/Dockerfile",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "build/makefile",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
       "path": ".gitignore",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/articlegrid/articlegrid.ts",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "README.md",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/surf-calendar/surf-calendar.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/logo/logo.html",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/app/logo/logo.scss",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "src/assets/images/logo.png",
+      "sourceType": "intellij",
+      "readOnly": false
+    },
+    {
+      "path": "mastra/oyvagent/src/mastra/agents/agent.ts",
+      "readOnly": false
+    },
+    {
+      "path": "mastra/oyvagent/src/mastra/index.ts",
+      "readOnly": false
+    },
+    {
+      "path": "mastra/oyvagent/src/mastra/tools/web-search.ts",
+      "readOnly": false
+    },
+    {
+      "path": "mastra/oyvagent/.env.example",
       "readOnly": false
     }
   ]

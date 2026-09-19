@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olas y Vientos — Instagram feed post prototypes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#ff6b35;--bg:#1a1a1a;--card:#000;--border:#1f1f1f;
+  --text:#fff;--muted:#ccc;--dot:#555;
+  --gradient-sunset:linear-gradient(135deg,#ff6b35 0%,#f7931e 100%);
+  --W:1080px;--H:1350px;--pad:64px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#2b2b2b;font-family:'Roboto',-apple-system,'Helvetica Neue',sans-serif;
+     display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px}
+body.only{background:transparent;padding:0;gap:0}
+body.only .slide{display:none}
+body.only .slide.show{display:flex}
+body.only .label{display:none}
+.label{color:#888;font:900 13px/1 Roboto,sans-serif;letter-spacing:2px;text-transform:uppercase;align-self:flex-start}
+
+.slide{width:var(--W);height:var(--H);background:var(--card);color:var(--text);
+       position:relative;overflow:hidden;display:flex;flex-direction:column;border:2px solid var(--border)}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:var(--gradient-sunset);z-index:5}
+
+.badge{display:inline-block;background:var(--accent);color:#000;font-weight:900;
+       text-transform:uppercase;letter-spacing:2px;font-size:22px;line-height:1;padding:14px 24px}
+.meta{display:flex;align-items:center;gap:12px;color:var(--accent);font-size:24px;font-weight:900;
+      text-transform:uppercase;letter-spacing:2px}
+.meta .dot{color:var(--dot)}
+.meta .author{color:var(--muted)}
+.title{font-size:64px;font-weight:900;line-height:1.1;text-transform:uppercase;letter-spacing:-1px}
+.title .hl{color:var(--accent)}
+.excerpt{font-size:30px;line-height:1.55;color:var(--muted)}
+.rule{height:6px;width:96px;background:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--accent);color:#000;font-weight:900;
+     text-transform:uppercase;letter-spacing:2px;font-size:24px;padding:20px 40px}
+.media{position:relative;overflow:hidden;background:#111}
+.media img{width:100%;height:100%;object-fit:cover;display:block}
+.media::after{content:'';position:absolute;inset:auto 0 0 0;height:45%;
+              background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,0));z-index:1}
+.media .badge{position:absolute;top:28px;left:28px;z-index:2}
+.media .brandmark{position:absolute;left:28px;bottom:28px;z-index:2;height:64px;width:auto}
+.handle{position:absolute;right:36px;bottom:36px;z-index:6;color:var(--muted);
+        font-size:24px;font-weight:700;letter-spacing:2px}
+
+/* A · NOTICIA — la card de la web, tal cual, en 4:5 */
+.news .media{flex:0 0 700px}
+.news .body{padding:52px 60px 0;display:flex;flex-direction:column;gap:20px;flex:1;min-height:0;overflow:hidden}
+.news .title{font-size:58px}
+.news .excerpt{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.news .footer{padding:28px 60px 56px;flex:0 0 auto}
+
+/* B · PARTE DEL FINDE — tabla de spots */
+.forecast{padding:var(--pad);gap:34px}
+.forecast .head{display:flex;justify-content:space-between;align-items:flex-start}
+.forecast h1{font-size:82px;font-weight:900;text-transform:uppercase;line-height:.98;letter-spacing:-2px}
+.forecast h1 em{font-style:normal;color:var(--accent);display:block}
+.row{display:flex;align-items:center;gap:24px;border-bottom:2px solid #222;padding:26px 0}
+.row .spot{flex:1;font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-.5px}
+.row .val{font-size:30px;font-weight:900;color:var(--accent);letter-spacing:1px;min-width:150px;text-align:right}
+.row .val small{display:block;color:#777;font-size:18px;letter-spacing:2px;text-transform:uppercase;font-weight:900}
+.forecast .note{margin-top:auto;font-size:26px;color:var(--muted);line-height:1.5}
+
+/* C · SPOT DEL MES — portada editorial */
+.spot .media{position:absolute;inset:0;height:100%}
+.spot .media::after{height:85%;background:linear-gradient(to top,rgba(0,0,0,.95) 15%,rgba(0,0,0,.4) 55%,transparent)}
+.spot .copy{position:relative;z-index:3;margin-top:auto;padding:var(--pad);display:flex;flex-direction:column;gap:22px}
+.spot .kicker{color:var(--accent);font-size:26px;font-weight:900;letter-spacing:4px;text-transform:uppercase}
+.spot h1{font-size:110px;font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:-3px}
+.spot .chips{display:flex;gap:14px;flex-wrap:wrap}
+.spot .chip{border:3px solid var(--accent);color:var(--accent);font-size:22px;font-weight:900;
+            letter-spacing:2px;text-transform:uppercase;padding:12px 20px}
+</style>
+</head>
+<body>
+
+<div class="label">A · Noticia (card de la web en 4:5)</div>
+<section class="slide news" id="s1">
+  <div class="media">
+    <img src="../../stage/surfwave2.jpg" alt="">
+    <span class="badge">Main</span>
+    <img class="brandmark" src="../../logoia2.png" alt="">
+  </div>
+  <div class="body">
+    <div class="meta"><span>7 de septiembre de 2026</span><span class="dot">•</span><span class="author">Editor</span></div>
+    <h1 class="title">Canarias se proclama <span class="hl">campeona de España</span> FESurfing</h1>
+    <p class="excerpt">La selección canaria se ha coronado como campeona absoluta del Campeonato de España FESurfing de Selecciones Autonómicas 2026, disputado en la playa de Berria.</p>
+  </div>
+  <div class="footer"><span class="btn">Leer en olasyvientos.es</span></div>
+</section>
+
+<div class="label">B · Parte del finde</div>
+<section class="slide forecast" id="s2">
+  <div class="head">
+    <h1>Parte<em>del finde</em></h1>
+    <span class="badge">19–21 Sep</span>
+  </div>
+  <div class="rule"></div>
+  <div>
+    <div class="row"><span class="spot">Zarautz</span><span class="val">1,8 m<small>12 s</small></span><span class="val">SO 14 kn<small>Viento</small></span></div>
+    <div class="row"><span class="spot">Mundaka</span><span class="val">2,4 m<small>14 s</small></span><span class="val">S 9 kn<small>Viento</small></span></div>
+    <div class="row"><span class="spot">Castelldefels</span><span class="val">0,9 m<small>7 s</small></span><span class="val">E 18 kn<small>Viento</small></span></div>
+    <div class="row"><span class="spot">Tarifa</span><span class="val">1,2 m<small>9 s</small></span><span class="val">E 26 kn<small>Viento</small></span></div>
+  </div>
+  <p class="note">¿Dónde te metes este finde? Etiqueta a tu crew 👇</p>
+  <span class="handle">@olasyvientos</span>
+</section>
+
+<div class="label">C · Spot del mes</div>
+<section class="slide spot" id="s3">
+  <div class="media"><img src="../../stage/atardecer.jpg" alt=""></div>
+  <div class="copy">
+    <span class="kicker">Spot del mes</span>
+    <h1>Mundaka</h1>
+    <div class="chips"><span class="chip">Izquierda</span><span class="chip">Nivel alto</span><span class="chip">Otoño</span><span class="chip">Bizkaia</span></div>
+    <p class="excerpt">Mareas, mejor época y dónde aparcar. Guárdalo para tu próximo trip 📌</p>
+  </div>
+  <span class="handle">@olasyvientos</span>
+</section>
+
+<script>
+  const only = new URLSearchParams(location.search).get('only');
+  if (only){document.body.classList.add('only');
+    const el=document.getElementById('s'+only); if(el) el.classList.add('show');}
+</script>
+</body>
+</html>
+

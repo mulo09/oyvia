@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Post · artículo</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* Post de noticia 1080x1350 generado desde el artículo publicado.
+   Tokens de olasyvientos.es. No editar a mano: usa generate-post.mjs
+   Composición minimalista: FOTO + TITULAR.
+   Sin fecha, sin entradilla, sin botón. */
+:root{
+  --accent:#ff6b35;--card:#000;--border:#1f1f1f;--text:#fff;--muted:#ccc;
+  --gradient-sunset:linear-gradient(135deg,#ff6b35 0%,#f7931e 100%);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1350px;overflow:hidden}
+body{background:var(--card);color:var(--text);
+     font-family:'Roboto',-apple-system,'Helvetica Neue',sans-serif;
+     display:flex;flex-direction:column;position:relative;border:2px solid var(--border)}
+body::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;
+             background:var(--gradient-sunset);z-index:9}
+
+/* --- Foto: ocupa la mayor parte del lienzo --- */
+.media{position:relative;flex:0 0 880px;overflow:hidden;background:#111}
+.media > #photo{width:100%;height:100%;object-fit:cover;display:block}
+.media::after{content:'';position:absolute;inset:auto 0 0 0;height:40%;
+  background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,0));z-index:1}
+
+/* --- Titular --- */
+.body{flex:1;min-height:0;padding:52px 64px 0;display:flex;flex-direction:column;
+      gap:28px;overflow:hidden}
+.rule{flex:0 0 auto;height:7px;width:120px;background:var(--accent)}
+#title{font-size:70px;font-weight:900;line-height:1.05;text-transform:uppercase;
+       letter-spacing:-1.5px;flex:0 1 auto;overflow:hidden}
+#title .hl{color:var(--accent)}
+
+.handle{position:absolute;right:64px;bottom:46px;color:var(--muted);
+        font-size:23px;font-weight:700;letter-spacing:2px;z-index:4}
+.foot{flex:0 0 auto;height:92px}
+</style>
+</head>
+<body>
+  <div class="media">
+    <img id="photo" src="{{IMG}}" alt="">
+  </div>
+
+  <div class="body">
+    <div class="rule"></div>
+    <h1 id="title">{{TITLE}}</h1>
+  </div>
+  <div class="foot"></div>
+  <span class="handle">@olasyvientos</span>
+
+<script>
+/* Auto-ajuste del titular: baja el cuerpo hasta que cabe entero y, si sobra
+   sitio (titulares cortos), lo sube para llenar bien el bloque. */
+(function fit(){
+  const box = document.querySelector('.body');
+  const title = document.getElementById('title');
+  const fits = () => box.scrollHeight <= box.clientHeight;
+
+  let size = 70;
+  while (!fits() && size > 34){ size -= 2; title.style.fontSize = size + 'px'; }
+  while (fits() && size < 92){
+    size += 2; title.style.fontSize = size + 'px';
+    if (!fits()){ size -= 2; title.style.fontSize = size + 'px'; break; }
+  }
+  document.documentElement.dataset.fitted = String(size);
+
+  /* Autodiagnóstico: deja en el DOM el tamaño real al que se ha pintado la
+     foto. generate-post.mjs lo lee y aborta si no se cargó. */
+  const photo = document.getElementById('photo');
+  const box2 = photo ? photo.getBoundingClientRect() : null;
+  document.documentElement.dataset.photo =
+    (box2 ? Math.round(box2.width) + 'x' + Math.round(box2.height) : '0x0') + '@' +
+    (photo ? photo.naturalWidth + 'x' + photo.naturalHeight : '0x0');
+})();
+</script>
+</body>
+</html>
+

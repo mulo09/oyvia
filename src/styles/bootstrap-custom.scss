@@ -1,0 +1,33 @@
+// Trimmed-down Bootstrap import.
+//
+// Lighthouse flagged styles.css as ~95% unused CSS (40KB of 42KB wasted).
+// The full `bootstrap.min.css` framework was imported for the entire app, but
+// an audit of every template showed the *only* genuine Bootstrap grid usage
+// is in `text-and-description` (.container/.row/.col-lg-8/.mx-auto/.my-5/
+// .text-center/.mt-3/.pt-3). Every other Bootstrap-looking class in the app
+// (.btn, .btn-primary, .btn-secondary, .badge, .card, .navbar, .dropdown,
+// .pl-5/.pr-5 which don't even exist in Bootstrap 5...) is fully redefined
+// by that component's own scoped styles and never touches Bootstrap's CSS.
+//
+// So instead of shipping the whole ~200KB framework (reboot, forms, tables,
+// nav, navbar, dropdown, cards, accordion, modal, tooltip, popover,
+// carousel, spinners, offcanvas, alerts, list-group, etc.) we only pull in
+// the grid engine plus a handful of hand-picked utility classes.
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+
+// Hand-picked utilities actually referenced in templates (only the ones
+// still valid in Bootstrap 5 - `.pl-5`/`.pr-5`/`.pl-0`/`.pr-0` are Bootstrap
+// 4 classes that don't exist in v5 and were already inert).
+.mx-auto { margin-right: auto !important; margin-left: auto !important; }
+.my-5 { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+.mt-3 { margin-top: 1rem !important; }
+.pt-3 { padding-top: 1rem !important; }
+.text-center { text-align: center !important; }
+

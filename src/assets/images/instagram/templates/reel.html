@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olas y Vientos — Reels 9:16 prototypes</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   REELS — 1080x1920 (9:16)
+   Tokens de olasyvientos.es (styles.scss / articlegrid.scss)
+
+   ZONAS SEGURAS DE INSTAGRAM (no poner texto encima):
+     · arriba  250px  -> nombre de cuenta / UI
+     · abajo   420px  -> caption, audio, CTA
+     · derecha 180px  -> like / comentar / compartir / menú
+   Todo el contenido vive en la franja central.
+   Añade ?safe=1 a la URL para ver las guías.
+   ============================================================ */
+:root{
+  --accent:#ff6b35;--bg:#1a1a1a;--card:#000;--border:#1f1f1f;
+  --text:#fff;--muted:#ccc;--dot:#555;
+  --gradient-sunset:linear-gradient(135deg,#ff6b35 0%,#f7931e 100%);
+  --W:1080px;--H:1920px;
+  --safe-top:250px;--safe-bottom:420px;--safe-right:180px;--pad:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#2b2b2b;font-family:'Roboto',-apple-system,'Helvetica Neue',sans-serif;
+     display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px}
+body.only{background:transparent;padding:0;gap:0}
+body.only .slide{display:none}
+body.only .slide.show{display:flex}
+body.only .label{display:none}
+.label{color:#888;font:900 13px/1 Roboto,sans-serif;letter-spacing:2px;text-transform:uppercase;align-self:flex-start}
+
+.slide{width:var(--W);height:var(--H);background:var(--card);color:var(--text);
+       position:relative;overflow:hidden;display:flex;flex-direction:column}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;
+               background:var(--gradient-sunset);z-index:9}
+
+/* ---- guías de zona segura (solo con ?safe=1) ---- */
+.guides{display:none;position:absolute;inset:0;z-index:20;pointer-events:none}
+body.safe .guides{display:block}
+.guides i{position:absolute;background:rgba(255,107,53,.18);
+          border:2px dashed rgba(255,107,53,.65);display:flex;align-items:center;justify-content:center;
+          font-style:normal;font-size:22px;font-weight:900;letter-spacing:2px;
+          text-transform:uppercase;color:#ffb28c}
+.guides .t{top:0;left:0;right:0;height:var(--safe-top)}
+.guides .b{bottom:0;left:0;right:0;height:var(--safe-bottom)}
+.guides .r{top:var(--safe-top);bottom:var(--safe-bottom);right:0;width:var(--safe-right)}
+
+/* ---- átomos de marca ---- */
+.badge{display:inline-block;background:var(--accent);color:#000;font-weight:900;
+       text-transform:uppercase;letter-spacing:2px;font-size:24px;line-height:1;padding:16px 26px}
+.meta{display:flex;align-items:center;gap:12px;color:var(--accent);font-size:26px;
+      font-weight:900;text-transform:uppercase;letter-spacing:2px}
+.meta .dot{color:var(--dot)}
+.rule{height:6px;width:110px;background:var(--accent)}
+.handle{color:var(--muted);font-size:26px;font-weight:700;letter-spacing:2px}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--accent);color:#000;
+     font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:26px;padding:22px 44px}
+
+.media{position:absolute;inset:0}
+.media img{width:100%;height:100%;object-fit:cover;display:block}
+.veil::after{content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(0,0,0,.92) 18%,rgba(0,0,0,.35) 50%,rgba(0,0,0,.55) 100%)}
+
+/* contenedor que respeta las zonas seguras */
+.stage{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
+       padding:var(--safe-top) calc(var(--safe-right) + 20px) var(--safe-bottom) var(--pad)}
+
+/* ---------- R1 · PORTADA DE REEL (la que se ve en el grid) ---------- */
+/* El grid recorta a 4:5 centrado: el titular debe caber en la franja central */
+.cover .stage{justify-content:center;gap:30px}
+.cover h1{font-size:104px;font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-3px}
+.cover h1 em{font-style:normal;color:var(--accent);display:block}
+.cover .sub{font-size:32px;color:var(--muted);line-height:1.45;max-width:700px}
+.cover .top{position:absolute;top:calc(var(--safe-top) - 90px);left:var(--pad);z-index:4}
+.cover .brand{position:absolute;left:var(--pad);bottom:calc(var(--safe-bottom) - 100px);z-index:4;
+              display:flex;align-items:center;gap:18px}
+.cover .brand img{height:64px}
+
+/* ---------- R2 · FRAME CON HOOK + SUBTÍTULOS ---------- */
+.frame .stage{justify-content:space-between}
+.hook{background:var(--accent);color:#000;font-size:64px;font-weight:900;text-transform:uppercase;
+      line-height:1.02;letter-spacing:-1.5px;padding:24px 28px;align-self:flex-start;max-width:100%}
+.hook .line2{background:#000;color:var(--accent);display:inline-block;padding:4px 10px;margin-top:10px}
+.caption-box{align-self:flex-start;max-width:760px}
+.sub-line{display:inline;background:rgba(0,0,0,.82);color:#fff;font-size:44px;font-weight:900;
+          line-height:1.5;padding:10px 16px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.sub-line b{color:var(--accent)}
+.ticker{position:absolute;left:0;right:0;bottom:calc(var(--safe-bottom) - 110px);z-index:4;
+        background:#000;border-top:4px solid var(--accent);border-bottom:4px solid var(--accent);
+        padding:18px var(--pad);display:flex;gap:28px;align-items:center;
+        font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:2px}
+.ticker .k{color:var(--accent)}
+
+/* ---------- R3 · END CARD / CTA ---------- */
+.end{align-items:center;justify-content:center;text-align:center;
+     background:radial-gradient(120% 80% at 50% 38%,#2a1409 0%,#000 65%)}
+.end .stage{align-items:center;justify-content:center;text-align:center;gap:40px;
+            padding-left:var(--pad);padding-right:var(--pad)}
+.end .logo{height:200px}
+.end .word{color:var(--accent);font-size:62px;font-weight:900;text-transform:uppercase;letter-spacing:2px;line-height:1}
+.end h2{font-size:58px;font-weight:900;text-transform:uppercase;line-height:1.1;letter-spacing:-1px}
+.end .url{color:var(--accent);font-size:36px;font-weight:900;letter-spacing:3px}
+.arrows{font-size:60px;color:var(--accent);letter-spacing:10px}
+</style>
+</head>
+<body>
+
+<div class="label">R1 · Portada de reel (cover del grid)</div>
+<section class="slide cover" id="s1">
+  <div class="media veil"><img src="../../stage/teahupoo.jpg" alt=""></div>
+  <div class="top"><span class="badge">Surf</span></div>
+  <div class="stage">
+    <h1>3 claves<em>del swell</em><em>del finde</em></h1>
+    <div class="rule"></div>
+    <p class="sub">Lo que tienes que mirar antes de coger el coche.</p>
+  </div>
+  <div class="brand"><img src="../../logoia2.png" alt=""><span class="handle">@olasyvientos</span></div>
+  <div class="guides"><i class="t">Zona segura · UI superior 250px</i><i class="b">Zona segura · caption 420px</i><i class="r">Botones 180px</i></div>
+</section>
+
+<div class="label">R2 · Frame con hook + subtítulos</div>
+<section class="slide frame" id="s2">
+  <div class="media veil"><img src="../../stage/surfwave1.jpg" alt=""></div>
+  <div class="stage">
+    <div class="hook">No mires la altura<span class="line2">mira el periodo</span></div>
+    <div class="caption-box">
+      <span class="sub-line">Con <b>12 segundos</b> de periodo la ola rompe con fuerza aunque midan lo mismo.</span>
+    </div>
+  </div>
+  <div class="ticker"><span class="k">Clave 01</span><span>Periodo &gt; altura</span><span class="k">·</span><span>Sigue para la 02</span></div>
+  <div class="guides"><i class="t">Zona segura · UI superior 250px</i><i class="b">Zona segura · caption 420px</i><i class="r">Botones 180px</i></div>
+</section>
+
+<div class="label">R3 · End card (CTA de cierre)</div>
+<section class="slide end" id="s3">
+  <div class="stage">
+    <img class="logo" src="../../logoia2.png" alt="">
+    <span class="word">Olas y Vientos</span>
+    <div class="rule"></div>
+    <h2>Guárdalo para<br>tu próxima sesión</h2>
+    <span class="btn">Sigue @olasyvientos</span>
+    <div class="url">olasyvientos.es</div>
+  </div>
+  <div class="guides"><i class="t">Zona segura · UI superior 250px</i><i class="b">Zona segura · caption 420px</i><i class="r">Botones 180px</i></div>
+</section>
+
+<script>
+  const q = new URLSearchParams(location.search);
+  const only = q.get('only');
+  if (q.get('safe')) document.body.classList.add('safe');
+  if (only){document.body.classList.add('only');
+    const el=document.getElementById('s'+only); if(el) el.classList.add('show');}
+</script>
+</body>
+</html>
+

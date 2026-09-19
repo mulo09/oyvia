@@ -96,9 +96,9 @@ export class Articlegrid implements OnInit {
   getArticleGrid(){
     let params = {};
     console.log('Getting the products list');
-    this.conectionws.setEndpoint('http://www.olasyvientos.es:8070/getarticles');
+    // this.conectionws.setEndpoint('http://www.olasyvientos.es:8070/getarticles');
 
-    // this.conectionws.setEndpoint('/api/getarticles');
+    this.conectionws.setEndpoint('/api/getarticles');
     this.conectionws
       .sendpost2(params)
       .toPromise()
