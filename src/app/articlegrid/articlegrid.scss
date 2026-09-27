@@ -413,6 +413,18 @@ $baseline: 8px;
 
 .event-feed-card__footer {
   padding: 0 1.25rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+// Like + share pair under the article text in the list layout.
+.article-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 // Respect users who asked the OS to limit animation.

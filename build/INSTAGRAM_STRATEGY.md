@@ -139,9 +139,9 @@ Usar **8–15**, nunca los mismos dos días seguidos. Mezclar tamaños. En el **
 - [ ] Cover personalizada coherente con el grid
 
 **Assets ya en el repo:**
-- `video-src/stage_instagram.mp4` — máster vertical
-- `video-src/stage_desktop.mp4` — máster horizontal
-- `video-src/encode-web.sh` — script de encoding
+- `youtube/stage_instagram.mp4` — máster vertical
+- `youtube/stage_desktop.mp4` — máster horizontal
+- `youtube/encode-web.sh` — script de encoding
 
 ---
 
@@ -223,11 +223,11 @@ Registrar aquí el histórico:
 ## 13. Kit visual (plantillas)
 
 El diseño de las publicaciones replica la web y vive en
-[`src/assets/images/instagram/`](../src/assets/images/instagram/README.md).
+[`instagram/`](instagram/README.md).
 
 - **Tokens:** acento `#ff6b35`, fondo `#1a1a1a`, tarjeta `#000`, texto `#fff`, secundario `#ccc`,
   Roboto 900 en mayúsculas, **sin border-radius** (esquinas vivas).
-- **Plantillas editables:** `src/assets/images/instagram/templates/*.html`
+- **Plantillas editables:** `instagram/templates/*.html`
 - **Regenerar los PNG:** `cd src/assets/images/instagram/templates && ./render.sh`
 - **Piezas:** carrusel de 6 slides (portada → contexto → dato → claves → foto → CTA),
   3 posts de feed (noticia, parte del finde, spot del mes), 3 frames de Reel

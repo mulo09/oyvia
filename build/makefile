@@ -82,3 +82,90 @@ gen-swagger:
 # Common utilities
 docker-clean:
 	@docker system prune --volumes --force
+
+# ---------------------------------------------------------------------------
+# Instagram: genera el post de un artículo publicado en olasyvientos.es
+#
+#   make -f build/makefile post id=97
+#   cd build && make post id=97
+#   make post id=97 title="Titular a medida"
+#
+# Requisitos: Node 18+ y Google Chrome instalado.
+# Salida: build/instagram/post-article-<id>.png (+ .txt)
+# ---------------------------------------------------------------------------
+
+# Raíz del repo calculada desde la ubicación de este makefile, para que los
+# targets funcionen tanto desde build/ como desde la raíz.
+ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST)))..)
+IG_DIR := $(ROOT)/build/instagram
+IG_TEMPLATES := $(IG_DIR)/templates
+
+.PHONY: post ig-open ig-templates
+
+post:
+ifndef id
+	$(error Falta el id del articulo. Uso: make post id=97)
+endif
+	@cd $(IG_TEMPLATES) && node generate-post.mjs $(id) $(if $(title),--title "$(title)",)
+
+# Abre el PNG generado para revisarlo antes de publicar.
+ig-open:
+ifndef id
+	$(error Falta el id del articulo. Uso: make ig-open id=97)
+endif
+	@open $(IG_DIR)/post-article-$(id).png
+
+# Re-exporta las plantillas de ejemplo (carrusel, reels, stories, perfil).
+ig-templates:
+	@cd $(IG_TEMPLATES) && ./render.sh
+
+# ---------------------------------------------------------------------------
+# Video: descarga y codifica un clip para el banner Stage (build/youtube/encode-web.sh)
+#
+# Forma corta (4 parametros, sin flags):
+#   make -f build/makefile video args='https://youtu.be/fUYJC70G43o 10:11:59 10:12:19 teahupoo'
+#   make -f build/makefile video args='build/youtube/videex_master.mp4 videex'
+#
+# Forma con variables:
+#   make -f build/makefile video u="https://youtu.be/fUYJC70G43o" s=10:11:59 e=10:12:19 name=teahupoo
+#   cd build && make video i=clip.mp4 name=teahupoo
+#   make video u=<url> s=1:00:00 e=1:00:20 k=1 name=teahupoo
+#
+# Parametros (los mismos que el script):
+#   u=<url>    URL de YouTube (requiere s y e)
+#   s=<time>   inicio hh:mm:ss
+#   e=<time>   fin    hh:mm:ss
+#   i=<file>   usa un fichero local en vez de descargar
+#   k=1        conserva el master descargado
+#   name=<n>   nombre base de salida (obligatorio)
+#
+# Nota: make no admite ':' ni '//' en los objetivos, por eso la URL y los
+# tiempos van en args='...' o en variables, no sueltos tras "video".
+# Nota 2: no uses "make -n", es una simulacion (dry-run) y no ejecuta nada.
+# Las URLs con '&' (p.ej. ...watch?v=ID&t=123s) funcionan tal cual dentro de
+# args='...': el target las trocea solo por espacios, sin interpretar el shell.
+#
+# Requisitos: yt-dlp (solo con URL) y ffmpeg.
+# ---------------------------------------------------------------------------
+#make -f build/makefile video args='https://www.youtube.com/watch?v=Mt4qlqsjHMA&t=2523s 00:42:26 00:42:48 panoramic'
+ENCODE_WEB := $(ROOT)/build/youtube/encode-web.sh
+
+.PHONY: video
+
+video:
+ifdef args
+	@VIDEO_ARGS='$(args)' bash -c 'IFS=" "; set -f; set -- $$VIDEO_ARGS; set +f; bash "$(ENCODE_WEB)" "$$@"'
+else
+ifndef name
+	$(error Falta name. Uso: make video u=<url> s=<start> e=<end> name=<nombre>)
+endif
+	@VIDEO_U='$(u)' VIDEO_S='$(s)' VIDEO_E='$(e)' VIDEO_I='$(i)' VIDEO_K='$(k)' VIDEO_NAME='$(name)' \
+		bash -c 'set -- ; \
+			[ -n "$$VIDEO_U" ] && set -- "$$@" -u "$$VIDEO_U"; \
+			[ -n "$$VIDEO_S" ] && set -- "$$@" -s "$$VIDEO_S"; \
+			[ -n "$$VIDEO_E" ] && set -- "$$@" -e "$$VIDEO_E"; \
+			[ -n "$$VIDEO_I" ] && set -- "$$@" -i "$$VIDEO_I"; \
+			[ -n "$$VIDEO_K" ] && set -- "$$@" -k; \
+			bash "$(ENCODE_WEB)" "$$@" "$$VIDEO_NAME"'
+endif
+

@@ -8,8 +8,10 @@ export class Newsmodel {
     date: string;
     author: string;
     category: string;
+    /** Global like counter, the same for every visitor. Comes straight off the API. */
+    likes: number;
 
-  constructor(id: number, name: string, description: string, fileList: Array<Filesmodel>, date: string, author: string, category: string){
+  constructor(id: number, name: string, description: string, fileList: Array<Filesmodel>, date: string, author: string, category: string, likes: number = 0){
         this.id = id
         this.name = name;
         this.description = description;
@@ -17,6 +19,7 @@ export class Newsmodel {
         this.date = date;
         this.author = author;
         this.category = category;
+        this.likes = likes;
   }
 
   getShortDescription() : string {

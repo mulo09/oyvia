@@ -1,0 +1,14 @@
+{
+  "/api": {
+    "target": "http://www.olasyvientos.es:8070",
+    "secure": false,
+    "changeOrigin": true,
+    "followRedirects": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
+
+

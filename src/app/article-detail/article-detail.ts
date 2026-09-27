@@ -9,10 +9,12 @@ import {SITE, absoluteUrl} from '../site.config';
 import {Newsmodel} from '../models/newsmodel';
 import {Filesmodel} from '../models/filesmodels';
 import {ShareButton} from '../share-button/share-button';
+import {LikeButton} from '../like-button/like-button';
+import {LikesService} from '../services/likes';
 
 @Component({
   selector: 'app-article-detail',
-  imports: [CommonModule, RouterModule, ShareButton],
+  imports: [CommonModule, RouterModule, ShareButton, LikeButton],
   templateUrl: './article-detail.html',
   styleUrl: './article-detail.scss',
 })
@@ -29,6 +31,7 @@ export class ArticleDetail implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private articleService: ArticleService,
+    private likesService: LikesService,
     public conectionws: Conectionws2,
     private cdr: ChangeDetectorRef
   ) {}
@@ -72,6 +75,7 @@ export class ArticleDetail implements OnInit, OnDestroy {
   }
 
   loadArticle(id: number) {
+
     // First try to get from service
     this.article = this.articleService.getArticleById(id);
 
@@ -109,13 +113,16 @@ export class ArticleDetail implements OnInit, OnDestroy {
         Filesmodel.listFromApi(d.files),
         d.date,
         d.author || 'Admin',
-        d.category || 'Noticias Surf'
+        d.category || 'Noticias Surf',
+        d.likes || 0
       );
       articles.push(newsmodel);
     }
 
     // Store in service for future use
     this.articleService.setArticles(articles);
+    // The API is the source of truth for like counts.
+    this.likesService.seedCounts(articles);
 
     // Now load the specific article
     this.article = this.articleService.getArticleById(articleId);

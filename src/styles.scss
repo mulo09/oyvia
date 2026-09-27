@@ -71,6 +71,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Accessibility improvements */
+
+/* Screen-reader-only text.
+   Used by headings that exist purely to label a landmark (for example the
+   `aria-labelledby` heading above the article grid on the home page). The
+   class name matches Bootstrap 5's utility, but this project ships a custom
+   Bootstrap build without it, so it is defined here. Without this rule those
+   headings render as normal <h2> elements and inherit
+   `color: var(--color-primary-dark)`, i.e. dark navy on the dark background.
+   `clip-path` + 1px box keeps the text in the accessibility tree while
+   removing it from the visual layout. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 a {
   color: inherit;
   text-decoration: none;

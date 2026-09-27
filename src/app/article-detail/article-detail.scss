@@ -287,7 +287,14 @@
 
 .article-share {
   margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
+
+// The like button styles now live in the app-like-button component, which is
+// shared with the article grid.
 
 .btn-primary {
   background: var(--color-accent);

@@ -5,15 +5,17 @@ import {Conectionws2} from '../services/conectionws';
 import {Newsmodel} from '../models/newsmodel';
 import {Filesmodel} from '../models/filesmodels';
 import {ArticleService} from '../services/article';
+import {LikesService} from '../services/likes';
 import {provideHttpClient} from '@angular/common/http';
 import {ShareButton} from '../share-button/share-button';
+import {LikeButton} from '../like-button/like-button';
 import {SITE} from '../site.config';
 
 export type ArticleGridLayout = 'list' | 'feed';
 
 @Component({
   selector: 'app-articlegrid',
-  imports: [CommonModule, RouterModule, ShareButton],
+  imports: [CommonModule, RouterModule, ShareButton, LikeButton],
   templateUrl: './articlegrid.html',
   styleUrl: './articlegrid.scss',
 })
@@ -49,6 +51,7 @@ export class Articlegrid implements OnInit {
   constructor(
     public conectionws: Conectionws2,
     private articleService: ArticleService,
+    private likesService: LikesService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -99,8 +102,11 @@ export class Articlegrid implements OnInit {
   getArticleGrid(){
     let params = {};
     console.log('Getting the products list');
-    // this.conectionws.setEndpoint('http://www.olasyvientos.es:8070/getarticles');
-
+    // Always call the backend through the same origin (`/api` is proxied by
+    // nginx in production and by proxy.conf.json in `ng serve`). Calling
+    // http://www.olasyvientos.es:8070 directly triggers a cross-origin
+    // preflight that the server answers with a redirect, which browsers
+    // reject ("Redirect is not allowed for a preflight request").
     this.conectionws.setEndpoint('/api/getarticles');
     this.conectionws
       .sendpost2(params)
@@ -128,7 +134,8 @@ export class Articlegrid implements OnInit {
         Filesmodel.listFromApi(d.files),
         d.date,
         d.author || 'Admin',
-        d.category || 'Noticias Surf'
+        d.category || 'Noticias Surf',
+        d.likes || 0
       )
       this.list1.push(newsmodel);
     }
@@ -138,6 +145,9 @@ export class Articlegrid implements OnInit {
     this.list1.sort((a, b) => b.id - a.id);
     // Store articles in the shared service
     this.articleService.setArticles(this.list1);
+    // The API is the source of truth for like counts, so every fetch
+    // refreshes the shared counters (kept in sync across grid + detail).
+    this.likesService.seedCounts(this.list1);
     console.log('Articles loaded:', this.list1);
     console.log('Total articles:', this.list1.length);
 

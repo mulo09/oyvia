@@ -1,8 +1,8 @@
 # Kit visual de Instagram — Olas y Vientos
 
 Generación de publicaciones que replican el diseño de **olasyvientos.es**.
-Los tokens no están inventados: salen de `src/styles.scss` y
-`src/app/articlegrid/articlegrid.scss`.
+Los tokens no están inventados: salen de `../../src/styles.scss` y
+`../../src/app/articlegrid/articlegrid.scss`.
 
 **Hay dos formas de producir imágenes:**
 
@@ -102,9 +102,9 @@ Para `node generate-post.mjs 97`:
 
 | Archivo | Ubicación | Qué es |
 |---|---|---|
-| `post-article-97.png` | `src/assets/images/instagram/` | **La imagen a publicar.** 1080×1350 PNG |
-| `post-article-97.txt` | `src/assets/images/instagram/` | URL del artículo + caption + hashtags, listo para pegar |
-| `article-97.jpg` | `templates/.cache/` | Foto original descargada (caché, ignorada por git) |
+| `post-article-97.png` | `` | **La imagen a publicar.** 1080×1350 PNG |
+| `post-article-97.txt` | `` | URL del artículo + caption + hashtags, listo para pegar |
+| `article-97.jpg` | `templates/.cache` | Foto original descargada (caché, ignorada por git) |
 
 > El nombre siempre es `post-article-<id>`, así que volver a lanzar el script
 > **sobrescribe** la versión anterior de ese artículo.

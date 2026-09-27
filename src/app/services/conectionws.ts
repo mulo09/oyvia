@@ -3,9 +3,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class Conectionws2 {
+  // NOTE: `Access-Control-Allow-Origin` is a *response* header. Sending it on
+  // the request does nothing except add a non-safelisted header, which forces
+  // an extra CORS preflight. Only the content type is needed here.
   HEADERS_POST: any = {
-    'Content-Type': 'application/json',
-    'Acces-Control-Allow-Origin': '*'
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
   };
   BACKEND: string = 'http://MULOHOST:8080/ALMSERVICE/rest/wsService/insertArticle';
 

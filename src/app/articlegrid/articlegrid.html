@@ -57,7 +57,10 @@
             {{ p.getShortDescription()}}
           </p>
           <p><button type="button" class="btn btn-secondary" [routerLink]="['/article', p.id]">Leer Artículo</button></p>
-          <app-share-button [articleId]="p.id" [title]="p.name"></app-share-button>
+          <div class="article-actions">
+            <app-like-button [articleId]="p.id"></app-like-button>
+            <app-share-button [articleId]="p.id" [title]="p.name"></app-share-button>
+          </div>
         </div>
       </div>
     </div>
@@ -101,6 +104,7 @@
       </a>
 
       <div class="event-feed-card__footer">
+        <app-like-button [articleId]="p.id" [compact]="true"></app-like-button>
         <app-share-button [articleId]="p.id" [title]="p.name"></app-share-button>
       </div>
     </article>

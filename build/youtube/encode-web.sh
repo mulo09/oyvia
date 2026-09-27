@@ -3,18 +3,20 @@
 # Download (optional) and encode a clip into the web-optimised variants used by
 # the Stage banner.
 #
-# USAGE
-#   From a YouTube URL + time range:
-#     ./video-src/encode-web.sh -u <url> -s <start> -e <end> <name>
-#     ./video-src/encode-web.sh -u "https://youtu.be/fUYJC70G43o" -s 10:11:59 -e 10:12:19 teahupoo
+# USAGE (can be run from any directory)
+#   Positional form (no flags needed):
+#     ./build/youtube/encode-web.sh <url|file> <start> <end> <name>
+#     ./build/youtube/encode-web.sh "https://youtu.be/fUYJC70G43o" 10:11:59 10:12:19 teahupoo
+#     ./build/youtube/encode-web.sh clip.mp4 teahupoo          # local file, full clip
 #
-#   From a local file already on disk:
-#     ./video-src/encode-web.sh -i clip.mp4 teahupoo
+#   Flag form (equivalent):
+#     ./build/youtube/encode-web.sh -u <url> -s <start> -e <end> <name>
+#     ./build/youtube/encode-web.sh -i clip.mp4 teahupoo
 #
 #   Keep the downloaded 4K master instead of deleting it:
-#     ./video-src/encode-web.sh -u <url> -s 1:00:00 -e 1:00:20 -k teahupoo
+#     ./build/youtube/encode-web.sh -k <url> 1:00:00 1:00:20 teahupoo
 #
-# OPTIONS
+# OPTIONS (optional: the positional form covers the common cases)
 #   -u <url>     YouTube (or any yt-dlp supported) URL to download from.
 #   -s <time>    Section start,  hh:mm:ss  (requires -u).
 #   -e <time>    Section end,    hh:mm:ss  (requires -u).
@@ -35,13 +37,21 @@
 # bandwidth and removes any chance of an autoplay block due to sound.
 set -euo pipefail
 
+# Resolve paths from the script location, not the current working directory.
+# This file lives in <repo>/build/youtube/, so the repo root is two levels up.
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
+
 URL=""
 START=""
 END=""
 SRC=""
 KEEP_MASTER=0
 
-usage() { sed -n '3,33p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
+usage() {
+  awk 'NR > 2 && /^#/ { sub(/^# ?/, ""); print; next } NR > 2 { exit }' "$0"
+  exit "${1:-0}"
+}
 
 while getopts ":u:s:e:i:kh" opt; do
   case "$opt" in
@@ -57,11 +67,32 @@ while getopts ":u:s:e:i:kh" opt; do
 done
 shift $((OPTIND - 1))
 
+# --- Positional form --------------------------------------------------------
+# <url|file> <start> <end> <name>   or   <file> <name>
+# Anything already given with -u/-i/-s/-e wins, so both styles can be mixed.
+if [ "$#" -eq 4 ]; then
+  if [ -z "$URL" ] && [ -z "$SRC" ]; then
+    if [ -f "$1" ]; then SRC="$1"; else URL="$1"; fi
+  fi
+  [ -n "$START" ] || START="$2"
+  [ -n "$END" ]   || END="$3"
+  set -- "$4"
+elif [ "$#" -eq 3 ]; then
+  # <start> <end> <name> together with -u/-i
+  [ -n "$START" ] || START="$1"
+  [ -n "$END" ]   || END="$2"
+  set -- "$3"
+elif [ "$#" -eq 2 ]; then
+  # <file> <name>
+  if [ -z "$URL" ] && [ -z "$SRC" ]; then SRC="$1"; fi
+  set -- "$2"
+fi
+
 NAME="${1:-}"
 [ -n "$NAME" ] || { echo "Error: missing <name>." >&2; usage 1; }
 
-OUT_VIDEO="src/assets/videos"
-OUT_POSTER="src/assets/images/stage"
+OUT_VIDEO="$ROOT_DIR/src/assets/videos"
+OUT_POSTER="$ROOT_DIR/src/assets/images/stage"
 mkdir -p "$OUT_VIDEO" "$OUT_POSTER"
 
 # --- 1. Get the master clip -------------------------------------------------
@@ -73,7 +104,7 @@ if [ -n "$URL" ]; then
   DURATION="$(yt-dlp --no-warnings --print "%(duration_string)s" "$URL" | tail -1)"
   echo "==> Source duration: ${DURATION}. Requested section: ${START} -> ${END}"
 
-  SRC="video-src/${NAME}_master.mp4"
+  SRC="$SCRIPT_DIR/${NAME}_master.mp4"
   rm -f "$SRC"
   yt-dlp \
     --extractor-args "youtube:player_client=default,tv" \
@@ -129,7 +160,7 @@ fi
 
 echo
 echo "==> Done:"
-ls -lh "$OUT_VIDEO/${NAME}".* "$OUT_POSTER/${NAME}.jpg"
+ls -lh "$OUT_VIDEO/${NAME}"* "$OUT_POSTER/${NAME}.jpg"
 echo
 echo "Add to DEFAULT_STAGE_VIDEOS in src/app/models/stagevideo.ts:"
 echo "  desktopVideo: 'assets/videos/${NAME}.mp4'"
